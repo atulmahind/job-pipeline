@@ -1,11 +1,13 @@
 package in.mahind.bootquartz.job;
 
 import in.mahind.bootquartz.api.Pipeline;
+import in.mahind.bootquartz.service.ServiceInit;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Job class for pipeline initialization/configuration.
@@ -14,6 +16,9 @@ import org.slf4j.LoggerFactory;
  */
 
 public class JobInit extends Pipeline {
+
+	@Autowired
+	private ServiceInit serviceInit;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JobInit.class);
 
@@ -27,7 +32,12 @@ public class JobInit extends Pipeline {
 
 		LOGGER.info("Discovergy job pipeline {} started", pipelineNumber);
 
-		enqueueJob(jobExecutionContext, JobOne.class, pipelineName + "firstJob", "firstJobGroup");
+		serviceInit.theAwesomeMethod(pipelineName);
+
+		enqueueJob(jobExecutionContext,
+				JobOne.class,
+				pipelineName + dataMap.get(PIPELINE_NAME) + "firstJob",
+				"firstJobGroup");
 	}
 
 	@Override

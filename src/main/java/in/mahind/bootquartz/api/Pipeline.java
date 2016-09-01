@@ -46,16 +46,17 @@ public abstract class Pipeline implements Job {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Pipeline.class);
 
 	/**
-	 * Delay between execution of two jobs.
-	 * It can be tuned from <tt>application.properties</tt>.
-	 */
-	@Value("#{new Integer('${job.delayInSeconds}')}")
-	private int jobDelay;
-
-	/**
 	 * Used to identify each pipeline.
 	 */
 	protected static Long pipelineNumber = 0L;
+
+	/**
+	 * Delay between execution of two jobs.
+	 * It can be tuned from <tt>application.properties</tt>.
+	 */
+
+	@Value("#{new Integer('${job.delayInSeconds}')}")
+	private int jobDelay;
 
 	@Autowired
 	private ConfigurableApplicationContext applicationContext;
@@ -157,7 +158,8 @@ public abstract class Pipeline implements Job {
 		JobDetail jobDetail = jobExecutionContext.getJobDetail();
 
 		if (!"pipelineJob".equals(jobDetail.getKey().getName()) &&
-				!"initJob".equals(jobDetail.getKey().getName())) {
+				!"initJob".equals(jobDetail.getKey().getName()))
+		{
 			LOGGER.info("Job delay of {}s for key {}", jobDelay,
 					jobExecutionContext.getJobDetail().getKey());
 			try {
