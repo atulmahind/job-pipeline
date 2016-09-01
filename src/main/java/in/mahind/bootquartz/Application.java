@@ -42,6 +42,7 @@ public class Application {
 				.withIdentity(jobName + "Trigger", jobGroup + "Trigger")
 				.withSchedule(simpleSchedule()
 						.withIntervalInSeconds(pipelineFrequency)
+						.withMisfireHandlingInstructionNextWithRemainingCount()
 						.repeatForever())
 				.build();
 
@@ -52,7 +53,7 @@ public class Application {
 			scheduler.startDelayed(0);
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (SchedulerException se) {
-			LOGGER.error("Unable to schedule DiscovergyPipeline: {}", se.toString());
+			LOGGER.error("Unable to schedule Pipeline: {}", se.toString());
 		}
 	}
 }
