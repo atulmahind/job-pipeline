@@ -23,7 +23,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
  *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-
+@SuppressWarnings("unchecked")
 public abstract class Pipeline implements Job {
 	/**
 	 * Pre-defined <tt>JobDataMap</tt> constant for {@link Pipeline#pipelineNumber}
@@ -157,8 +157,7 @@ public abstract class Pipeline implements Job {
 
 		JobDetail jobDetail = jobExecutionContext.getJobDetail();
 
-		if (!"pipelineJob".equals(jobDetail.getKey().getName()) &&
-				!"initJob".equals(jobDetail.getKey().getName()))
+		if (!"initJob".equals(jobDetail.getKey().getName()))
 		{
 			LOGGER.info("Job delay of {}s for key {}", jobDelay,
 					jobExecutionContext.getJobDetail().getKey());

@@ -25,19 +25,16 @@ public class JobInit extends Pipeline {
 	@Override
 	protected void doExecute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 		pipelineNumber++;
-		String pipelineName = pipelineNumber.toString().concat(".");
+		String pipelineName = pipelineNumber.toString();
 
 		JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
 		dataMap.put(PIPELINE_NAME, pipelineName);
 
-		LOGGER.info("Discovergy job pipeline {} started", pipelineNumber);
+		LOGGER.info("Job pipeline {} started", pipelineNumber);
 
 		serviceInit.theAwesomeMethod(pipelineName);
 
-		enqueueJob(jobExecutionContext,
-				JobOne.class,
-				pipelineName + dataMap.get(PIPELINE_NAME) + "firstJob",
-				"firstJobGroup");
+		enqueueJob(jobExecutionContext, JobOne.class, pipelineName + ".firstJob", "firstJobGroup");
 	}
 
 	@Override

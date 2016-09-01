@@ -23,11 +23,11 @@ public class JobOne extends Pipeline {
 
 		JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
 
-		if ((int) dataMap.get(PIPELINE_NAME) % 2 == 1) {
+		if (Integer.parseInt((String) dataMap.get(PIPELINE_NAME) ) % 2 == 1) {
 			terminate("Odd pipeline");
 		} else {
 			serviceOne.theAwesomeMethod((String) dataMap.get(PIPELINE_NAME));
-			enqueueJob(jobExecutionContext, JobTwo.class, dataMap.get(PIPELINE_NAME) + "secondJob", "secondJobGroup");
+			enqueueJob(jobExecutionContext, JobTwo.class, dataMap.get(PIPELINE_NAME) + ".secondJob", "secondJobGroup");
 		}
 	}
 

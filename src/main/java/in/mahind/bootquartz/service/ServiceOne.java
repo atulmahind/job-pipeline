@@ -23,6 +23,6 @@ public class ServiceOne implements ServiceBase {
 
 	@Override
 	public void shutDownProcessing(String message) {
-		LOGGER.info(message);
+		LOGGER.info(message + " terminated");
 	}
 }

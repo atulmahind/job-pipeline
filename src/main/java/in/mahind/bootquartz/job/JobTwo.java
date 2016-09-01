@@ -8,6 +8,8 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * Second job
+ *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
 
@@ -21,11 +23,11 @@ public class JobTwo extends Pipeline {
 
 		JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
 
-		if ((int) dataMap.get(PIPELINE_NAME) % 2 == 0) {
+		if (Integer.parseInt((String) dataMap.get(PIPELINE_NAME) ) % 2 == 0) {
 			terminate("Even pipeline");
 		} else {
 			serviceTwo.theAwesomeMethod((String)dataMap.get(PIPELINE_NAME));
-			enqueueJob(jobExecutionContext, JobTwo.class, dataMap.get(PIPELINE_NAME) + "secondJob", "secondJobGroup");
+			enqueueJob(jobExecutionContext, JobTwo.class, dataMap.get(PIPELINE_NAME) + ".secondJob", "secondJobGroup");
 		}
 
 	}
