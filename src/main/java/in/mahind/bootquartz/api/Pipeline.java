@@ -25,7 +25,10 @@ import static org.quartz.TriggerBuilder.newTrigger;
  */
 
 public abstract class Pipeline implements Job {
-
+	/**
+	 * Pre-defined <tt>JobDataMap</tt> constant for {@link Pipeline#pipelineNumber}
+	 */
+	protected static final String PIPELINE_NAME = "PipelineName";
 	/**
 	 * Pre-defined key constant for next <tt>Job</tt> {@link Class}
 	 */
