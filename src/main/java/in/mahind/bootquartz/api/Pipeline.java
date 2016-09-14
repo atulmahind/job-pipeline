@@ -23,7 +23,6 @@ import static org.quartz.TriggerBuilder.newTrigger;
  *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-@SuppressWarnings("unchecked")
 public abstract class Pipeline implements Job {
 	/**
 	 * Pre-defined <tt>JobDataMap</tt> constant for {@link Pipeline#pipelineNumber}
@@ -37,7 +36,6 @@ public abstract class Pipeline implements Job {
 	 * Pre-defined key constant for name of the next <tt>Job</tt>
 	 */
 	private static final String NEXT_JOB_NAME = "NextJobName";
-
 	/**
 	 * Pre-defined key constant for group of the next <tt>Job</tt>
 	 */
@@ -54,7 +52,6 @@ public abstract class Pipeline implements Job {
 	 * Delay between execution of two jobs.
 	 * It can be tuned from <tt>application.properties</tt>.
 	 */
-
 	@Value("#{new Integer('${job.delayInSeconds}')}")
 	private int jobDelay;
 
@@ -90,9 +87,7 @@ public abstract class Pipeline implements Job {
 	 */
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-
 		doExecute(jobExecutionContext);
-
 		if (jobExecutionContext.getJobDetail().getJobDataMap().get(NEXT_JOB_NAME) != null) {
 			try {
 				scheduleJob(jobExecutionContext);
@@ -115,20 +110,17 @@ public abstract class Pipeline implements Job {
 			throws SchedulerException, ClassNotFoundException
 	{
 		JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
-
 		Class jobClass = (Class) dataMap.remove(NEXT_JOB_CLASS);
 		String jobName = (String) dataMap.remove(NEXT_JOB_NAME);
 		String jobGroup = (String) dataMap.remove(NEXT_JOB_GROUP);
-
+		//noinspection unchecked
 		JobDetail jobDetail = newJob(jobClass)
 				.withIdentity(jobName, jobGroup)
 				.usingJobData(dataMap)
 				.build();
-
 		Trigger trigger = newTrigger()
 				.withIdentity(jobName + "Trigger", jobGroup + "Trigger")
 				.build();
-
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		JobFactory jobFactory = (JobFactory) applicationContext.getBean("jobFactory");
 		scheduler.setJobFactory(jobFactory);
@@ -154,9 +146,7 @@ public abstract class Pipeline implements Job {
 		dataMap.put(NEXT_JOB_CLASS, jobClass);
 		dataMap.put(NEXT_JOB_NAME, jobName);
 		dataMap.put(NEXT_JOB_GROUP, jobGroup);
-
 		JobDetail jobDetail = jobExecutionContext.getJobDetail();
-
 		if (!"initJob".equals(jobDetail.getKey().getName()))
 		{
 			LOGGER.info("Job delay of {}s for key {}", jobDelay,

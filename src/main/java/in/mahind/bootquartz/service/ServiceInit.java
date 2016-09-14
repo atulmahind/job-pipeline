@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
  *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-
 @Service
 public class ServiceInit implements ServiceBase {
 

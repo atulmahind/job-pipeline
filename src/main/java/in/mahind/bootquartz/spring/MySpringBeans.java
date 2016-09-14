@@ -20,13 +20,11 @@ import static org.quartz.TriggerBuilder.newTrigger;
 /**
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-
+@SuppressWarnings("SpringFacetCodeInspection")
 @Configuration
 public class MySpringBeans {
-
 	@Value("#{new Integer('${pipeline.frequencyInSeconds}')}")
 	private int pipelineFrequency;
-
 	@Autowired
 	private JobFactory jobFactory;
 
@@ -36,12 +34,10 @@ public class MySpringBeans {
 	public Scheduler pipelineStart() {
 		String jobName = "initJob";
 		String jobGroup = "initJobGroup";
-
 		JobDetail jobDetail = newJob(JobInit.class)
 				.withIdentity(jobName, jobGroup)
 				.usingJobData(new JobDataMap())
 				.build();
-
 		Trigger trigger = newTrigger()
 				.withIdentity(jobName + "Trigger", jobGroup + "Trigger")
 				.withSchedule(simpleSchedule()
@@ -49,7 +45,6 @@ public class MySpringBeans {
 						.withMisfireHandlingInstructionNextWithRemainingCount()
 						.repeatForever())
 				.build();
-
 		Scheduler scheduler = null;
 		try {
 			scheduler = StdSchedulerFactory.getDefaultScheduler();

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-
+@SuppressWarnings("WeakerAccess")
 public class JobTwo extends Pipeline {
 
 	@Autowired

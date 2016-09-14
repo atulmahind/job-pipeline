@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-
+@SuppressWarnings("WeakerAccess")
 @Service
 public class MyApplicationListener implements ApplicationListener<ContextClosedEvent> {
 
@@ -24,7 +24,6 @@ public class MyApplicationListener implements ApplicationListener<ContextClosedE
 
 	@Override
 	public void onApplicationEvent(ContextClosedEvent contextClosedEvent) {
-
 		LOGGER.info("Clean up...");
 	}
 }

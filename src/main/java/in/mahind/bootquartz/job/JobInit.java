@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author <a href="mailto:atul.mahind@gmail.com">Atul Mahind</a>
  */
-
 public class JobInit extends Pipeline {
 
 	@Autowired
@@ -38,7 +37,5 @@ public class JobInit extends Pipeline {
 	}
 
 	@Override
-	protected void terminate(String message) {
-
-	}
+	protected void terminate(String message) {	}
 }
