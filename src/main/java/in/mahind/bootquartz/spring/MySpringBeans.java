@@ -4,7 +4,6 @@ import in.mahind.bootquartz.Application;
 import in.mahind.bootquartz.job.JobInit;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.spi.JobFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
@@ -26,7 +26,7 @@ public class MySpringBeans {
 	@Value("#{new Integer('${pipeline.frequencyInSeconds}')}")
 	private int pipelineFrequency;
 	@Autowired
-	private JobFactory jobFactory;
+	private SpringBeanJobFactory jobFactory;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
@@ -58,8 +58,7 @@ public class MySpringBeans {
 	}
 
 	@Bean
-	public JobFactory jobFactory(ApplicationContext applicationContext)
-	{
+	public SpringBeanJobFactory jobFactory(ApplicationContext applicationContext) {
 		AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
 		jobFactory.setApplicationContext(applicationContext);
 		return jobFactory;

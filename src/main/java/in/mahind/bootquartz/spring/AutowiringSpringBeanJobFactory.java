@@ -15,8 +15,7 @@ import org.springframework.scheduling.quartz.SpringBeanJobFactory;
  * @see <a href="http://blog.btmatthews.com/?p=40">http://blog.btmatthews.com/?p=40</a>
  */
 @SuppressWarnings("WeakerAccess")
-public final class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory implements
-		ApplicationContextAware {
+public final class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory implements ApplicationContextAware {
 
     private transient AutowireCapableBeanFactory beanFactory;
 

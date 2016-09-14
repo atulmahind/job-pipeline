@@ -2,12 +2,11 @@ package in.mahind.bootquartz.api;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.spi.JobFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
@@ -56,7 +55,7 @@ public abstract class Pipeline implements Job {
 	private int jobDelay;
 
 	@Autowired
-	private ConfigurableApplicationContext applicationContext;
+	private SpringBeanJobFactory jobFactory;
 
 	/**
 	 * The real work of the extending <tt>Job</tt> class.
@@ -122,7 +121,6 @@ public abstract class Pipeline implements Job {
 				.withIdentity(jobName + "Trigger", jobGroup + "Trigger")
 				.build();
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		JobFactory jobFactory = (JobFactory) applicationContext.getBean("jobFactory");
 		scheduler.setJobFactory(jobFactory);
 		scheduler.startDelayed(0);
 		scheduler.scheduleJob(jobDetail, trigger);
